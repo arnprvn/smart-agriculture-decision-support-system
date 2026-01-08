@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { Language } from '../types';
-import { COLORS } from '../constants';
+import { COLORS, LANGUAGE_LIST } from '../constants';
 
 interface HeaderProps {
   lang: Language;
@@ -13,7 +13,7 @@ export const Header: React.FC<HeaderProps> = ({ lang, setLang, onLogout }) => {
   const [showLangs, setShowLangs] = useState(false);
 
   return (
-    <header className="bg-[#0F172A] text-white px-6 py-4 flex justify-between items-center shadow-lg">
+    <header className="bg-[#0F172A] text-white px-6 py-4 flex justify-between items-center shadow-lg sticky top-0 z-50">
       <div className="flex items-center gap-2">
         <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" fill="white" className="opacity-90"/>
@@ -27,13 +27,17 @@ export const Header: React.FC<HeaderProps> = ({ lang, setLang, onLogout }) => {
             <span className="text-xl">🌐</span>
           </button>
           {showLangs && (
-            <div className="absolute right-0 top-10 bg-white text-gray-800 rounded-lg shadow-xl py-2 w-48 z-50">
-              <button onClick={() => {setLang('en'); setShowLangs(false)}} className="w-full text-left px-4 py-2 hover:bg-gray-100 flex justify-between">
-                <span>English</span> <span className="text-gray-400">(English)</span>
-              </button>
-              <button onClick={() => {setLang('ta'); setShowLangs(false)}} className="w-full text-left px-4 py-2 hover:bg-gray-100 flex justify-between">
-                <span>தமிழ்</span> <span className="text-gray-400">(Tamil)</span>
-              </button>
+            <div className="absolute right-0 top-10 bg-white text-gray-800 rounded-lg shadow-xl py-2 w-56 z-50 max-h-80 overflow-y-auto">
+              {LANGUAGE_LIST.map((l) => (
+                <button 
+                  key={l.code}
+                  onClick={() => {setLang(l.code); setShowLangs(false)}} 
+                  className={`w-full text-left px-4 py-2 hover:bg-gray-100 flex justify-between items-center ${lang === l.code ? 'bg-blue-50' : ''}`}
+                >
+                  <span className="font-medium">{l.native}</span>
+                  <span className="text-[10px] text-gray-400">({l.name})</span>
+                </button>
+              ))}
             </div>
           )}
         </div>

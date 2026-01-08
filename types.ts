@@ -51,4 +51,7 @@ export enum AppTab {
   REPORT = 'report'
 }
 
-export type Language = 'en' | 'ta';
+export type Language = 
+  | 'en' | 'ta' | 'as' | 'bn' | 'brx' | 'doi' | 'gu' | 'hi' 
+  | 'kn' | 'ks' | 'kok' | 'mai' | 'ml' | 'mni' | 'mr' | 'ne' 
+  | 'or' | 'pa' | 'sa' | 'sat' | 'sd' | 'te' | 'ur';
