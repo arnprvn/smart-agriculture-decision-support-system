@@ -1,0 +1,7 @@
+{
+  "name": "Copy of AgroSmart - Intelligent Farming Assistant",
+  "description": "A comprehensive data-driven decision support system for farmers, providing real-time weather alerts, soil analysis, crop yield predictions, and AI-powered recommendations to optimize agricultural productivity.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
