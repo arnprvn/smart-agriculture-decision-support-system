@@ -1,17 +1,20 @@
 
 import React from 'react';
-import { SoilData } from '../types';
+import { SoilData, Language } from '../types';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
+import { TranslationType } from '../constants';
 
 interface Props {
   history: SoilData[];
+  lang: Language;
+  uiTranslations: TranslationType;
 }
 
-export const SoilDataDashboard: React.FC<Props> = ({ history }) => {
+export const SoilDataDashboard: React.FC<Props> = ({ history, lang, uiTranslations }) => {
+  const t = uiTranslations;
   const latest = history[0] || { nitrogen: 0, ph: 0, moisture: 0 };
   const count = history.length;
 
-  // Mock averages
   const avgs = {
     nitrogen: 1.7,
     ph: 3.5,
@@ -29,20 +32,20 @@ export const SoilDataDashboard: React.FC<Props> = ({ history }) => {
     <div className="space-y-6">
       <div className="bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
         <h2 className="text-2xl font-bold text-gray-900 mb-1 flex items-center gap-2">
-          <span>📈</span> Soil Health Dashboard
+          <span>📈</span> {t.dashboard}
         </h2>
-        <p className="text-gray-400 text-sm">{count} readings recorded</p>
+        <p className="text-gray-400 text-sm">{count} {t.readings}</p>
       </div>
 
       <div className="grid grid-cols-3 gap-3">
-        <StatCard label="Nitrogen" value={`${latest.nitrogen}%`} avg={avgs.nitrogen} color="text-yellow-600" />
-        <StatCard label="pH Level" value={latest.ph.toString()} avg={avgs.ph} color="text-blue-600" />
-        <StatCard label="Moisture" value={`${latest.moisture}%`} avg={avgs.moisture} color="text-cyan-600" />
+        <StatCard label={t.nitrogen} value={`${latest.nitrogen}%`} avg={avgs.nitrogen} color="text-yellow-600" lang={lang} t={t} />
+        <StatCard label={t.ph} value={latest.ph.toString()} avg={avgs.ph} color="text-blue-600" lang={lang} t={t} />
+        <StatCard label={t.moisture} value={`${latest.moisture}%`} avg={avgs.moisture} color="text-cyan-600" lang={lang} t={t} />
       </div>
 
       <div className="bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
         <h3 className="text-lg font-bold text-gray-800 mb-6 flex items-center gap-2">
-          <span>📉</span> Trends Over Time
+          <span>📉</span> {t.trends}
         </h3>
         <div className="h-64">
           <ResponsiveContainer width="100%" height="100%">
@@ -62,10 +65,12 @@ export const SoilDataDashboard: React.FC<Props> = ({ history }) => {
   );
 };
 
-const StatCard = ({ label, value, avg, color }: any) => (
-  <div className="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 text-center">
-    <div className={`text-2xl font-black mb-1 ${color}`}>{value}</div>
-    <div className="text-[11px] font-bold text-gray-500 uppercase tracking-tighter mb-0.5">{label}</div>
-    <div className="text-[10px] text-gray-400">Avg: {avg}%</div>
-  </div>
-);
+const StatCard = ({ label, value, avg, color, lang, t }: any) => {
+  return (
+    <div className="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 text-center">
+      <div className={`text-2xl font-black mb-1 ${color}`}>{value}</div>
+      <div className="text-[11px] font-bold text-gray-500 uppercase tracking-tighter mb-0.5 leading-tight">{label}</div>
+      <div className="text-[10px] text-gray-400">{t.avg}: {avg}%</div>
+    </div>
+  );
+};

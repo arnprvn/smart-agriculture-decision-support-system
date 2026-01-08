@@ -1,12 +1,18 @@
 
 import React from 'react';
+import { Language } from '../types';
+import { TranslationType } from '../constants';
 
 interface WeatherViewProps {
   location: string;
   setLocation: (l: string) => void;
+  lang: Language;
+  uiTranslations: TranslationType;
 }
 
-export const WeatherView: React.FC<WeatherViewProps> = ({ location, setLocation }) => {
+export const WeatherView: React.FC<WeatherViewProps> = ({ location, setLocation, lang, uiTranslations }) => {
+  const t = uiTranslations;
+
   const handleRedetect = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -22,13 +28,13 @@ export const WeatherView: React.FC<WeatherViewProps> = ({ location, setLocation 
     <div className="space-y-6">
       <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
         <h2 className="text-2xl font-bold text-gray-900 mb-1 flex items-center gap-2">
-          <span>☁️</span> Weather Information
+          <span>☁️</span> {t.weather}
         </h2>
-        <p className="text-gray-400 text-sm mb-6">Current weather to help plan your farming activities</p>
+        <p className="text-gray-400 text-sm mb-6">{t.weatherSub}</p>
         
         <div className="space-y-2">
           <label className="flex items-center gap-2 text-sm font-bold text-gray-800">
-            <span>📍</span> Your Location
+            <span>📍</span> {t.location}
           </label>
           <div className="flex gap-2">
             <input 
@@ -58,15 +64,7 @@ export const WeatherView: React.FC<WeatherViewProps> = ({ location, setLocation 
         </div>
         <div className="text-right">
           <div className="text-xl font-black text-gray-900">47%</div>
-          <div className="text-gray-400 font-medium">Humidity</div>
-        </div>
-      </div>
-
-      <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100">
-        <h3 className="font-bold text-gray-900 mb-4">Farming Tips</h3>
-        <p className="text-sm text-gray-500 italic">No specific weather-based alerts for your current location.</p>
-        <div className="mt-4 h-16 bg-gray-50 rounded-xl border border-gray-100 border-dashed flex items-center justify-center text-gray-300">
-          Future Forecast Data Integration
+          <div className="text-gray-400 font-medium">{t.humidity}</div>
         </div>
       </div>
     </div>

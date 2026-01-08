@@ -2,16 +2,18 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import { SoilData, AnalysisResult } from "../types";
 
-// Correctly initialize GoogleGenAI with a named parameter
-const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
-
 export const getAgriculturalInsights = async (
   data: SoilData,
-  location: string
+  location: string,
+  languageName: string = "English"
 ): Promise<AnalysisResult> => {
-  // Enhanced prompt to include new soil parameters and request all necessary UI fields
+  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+
   const prompt = `Analyze agricultural context for ${data.crop} in ${location}: 
   Soil: Nitrogen: ${data.nitrogen} ppm, pH: ${data.ph}, Moisture: ${data.moisture}%, Phosphorus: ${data.phosphorus || 'N/A'} mg/kg, Potassium: ${data.potassium || 'N/A'} mg/kg.
+  
+  IMPORTANT: Provide all text descriptions, titles, and advice in the ${languageName} language.
+  
   Provide a detailed analysis in JSON format including:
   1. status: list of summary status points with text and type ('success', 'warning', 'error').
   2. deficiencies: detailed deficiency cards (title, description, urgency).
@@ -80,10 +82,30 @@ export const getAgriculturalInsights = async (
     }
   });
 
-  // Access the text property directly (not a method)
   const text = response.text;
-  if (!text) {
-    throw new Error("No response text from AI");
-  }
+  if (!text) throw new Error("No response text from AI");
+  return JSON.parse(text.trim());
+};
+
+export const translateUIStrings = async (
+  baseStrings: Record<string, string>,
+  targetLanguage: string
+): Promise<Record<string, string>> => {
+  const ai = new GoogleGenAI({ apiKey: process.env.API_KEY });
+  
+  const prompt = `Translate the following UI labels from English to ${targetLanguage}. 
+  Maintain the exact same JSON keys.
+  JSON to translate: ${JSON.stringify(baseStrings)}`;
+
+  const response = await ai.models.generateContent({
+    model: "gemini-3-flash-preview",
+    contents: prompt,
+    config: {
+      responseMimeType: "application/json",
+    }
+  });
+
+  const text = response.text;
+  if (!text) throw new Error("Translation failed");
   return JSON.parse(text.trim());
 };

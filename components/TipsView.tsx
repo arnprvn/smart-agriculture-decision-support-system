@@ -1,13 +1,18 @@
 
 import React from 'react';
-import { AnalysisResult } from '../types';
+import { AnalysisResult, Language } from '../types';
+import { TranslationType } from '../constants';
 
 interface Props {
   analysis: AnalysisResult | null;
   crop: string;
+  lang: Language;
+  uiTranslations: TranslationType;
 }
 
-export const TipsView: React.FC<Props> = ({ analysis, crop }) => {
+export const TipsView: React.FC<Props> = ({ analysis, crop, lang, uiTranslations }) => {
+  const t = uiTranslations;
+
   if (!analysis) return (
     <div className="bg-white p-12 rounded-3xl shadow-sm text-center">
       <div className="text-5xl mb-4">🔍</div>
@@ -20,7 +25,7 @@ export const TipsView: React.FC<Props> = ({ analysis, crop }) => {
     <div className="space-y-6">
       <div className="bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
         <h2 className="text-2xl font-bold text-gray-900 mb-1 flex items-center gap-2">
-          <span>💡</span> Smart Recommendations
+          <span>💡</span> {t.tips}
         </h2>
         <p className="text-gray-400 text-sm">Based on your latest soil readings - {crop}</p>
       </div>

@@ -1,16 +1,17 @@
 
 import React, { useState } from 'react';
 import { SoilData, Language } from '../types';
-import { TRANSLATIONS } from '../constants';
+import { TranslationType } from '../constants';
 
 interface Props {
   onRecord: (d: SoilData) => void;
   loading: boolean;
   lang: Language;
+  uiTranslations: TranslationType;
 }
 
-export const SoilInputView: React.FC<Props> = ({ onRecord, loading, lang }) => {
-  const t = TRANSLATIONS[lang];
+export const SoilInputView: React.FC<Props> = ({ onRecord, loading, lang, uiTranslations }) => {
+  const t = uiTranslations;
   const [formData, setFormData] = useState({
     nitrogen: '',
     ph: '',
@@ -34,7 +35,7 @@ export const SoilInputView: React.FC<Props> = ({ onRecord, loading, lang }) => {
       <h2 className="text-2xl font-bold text-gray-900 mb-1 flex items-center gap-2">
         <span>🌡️</span> {t.recordData}
       </h2>
-      <p className="text-gray-400 text-sm mb-8">Enter nitrogen level (0-100 ppm)</p>
+      <p className="text-gray-400 text-sm mb-8">{t.recordData} - {lang.toUpperCase()}</p>
       
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
