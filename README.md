@@ -1,20 +1,18 @@
-<div align="center">
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
-</div>
+## About
 
-# Run and deploy your AI Studio app
+Smart Agriculture Decision Support System is a full-stack agricultural technology platform that empowers farmers with data-driven insights for smarter farming decisions. The system integrates soil analysis, weather intelligence, real-time alerts, and interactive dashboards to provide accurate recommendations for crop management and resource optimization.
 
-This contains everything you need to run your app locally.
+Designed with multilingual support (Tamil and English), the platform ensures accessibility for a wider farming community. It combines web, cloud, and mobile (Android/Flutter) technologies to deliver real-time monitoring, decision support, and actionable agricultural guidance anytime and anywhere.
 
-View your app in AI Studio: https://ai.studio/apps/drive/1_iV5DXtcB5cjF4T8B7np831coRwgsZ56
+### Key Highlights
 
-## Run Locally
+- Soil Parameter Analysis and Recommendations
+- Real-Time Weather Monitoring and Forecasting
+- Smart Alerts and Notifications
+- Interactive Analytics Dashboard
+- Tamil & English Language Support
+- Cloud-Based Data Management
+- Android & Flutter Mobile Integration
+- Real-Time Decision Support for Farmers
 
-**Prerequisites:**  Node.js
-
-
-1. Install dependencies:
-   `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
-3. Run the app:
-   `npm run dev`
+The platform aims to enhance agricultural productivity, improve resource utilization, reduce farming risks, and support sustainable farming practices through intelligent technology solutions.
